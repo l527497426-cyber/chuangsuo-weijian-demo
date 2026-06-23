@@ -1,0 +1,6 @@
+output/
+design-coding-skills/
+tests/
+.DS_Store
+node_modules/
+.vercel/
