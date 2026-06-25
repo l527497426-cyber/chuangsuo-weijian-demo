@@ -2,6 +2,8 @@ const promptForm = document.querySelector(".prompt-box");
 const textarea = document.querySelector(".prompt-box textarea");
 const sendButton = document.querySelector(".send-btn");
 
+requestAnimationFrame(() => document.body.classList.add("is-loaded"));
+
 promptForm?.addEventListener("submit", (event) => {
   event.preventDefault();
   sendButton?.animate(
@@ -18,11 +20,16 @@ promptForm?.addEventListener("submit", (event) => {
   });
 });
 
-document.querySelectorAll(".project-card, .new-card, .nav-item, .folder a").forEach((item) => {
-  item.addEventListener("pointerdown", () => item.classList.add("pressing"));
-  item.addEventListener("pointerup", () => item.classList.remove("pressing"));
-  item.addEventListener("pointerleave", () => item.classList.remove("pressing"));
-});
+document
+  .querySelectorAll(
+    ".project-card, .new-card, .nav-item, .folder button, .folder a, .create-btn, .left-actions button, .auto-btn, .send-btn, .card-head button",
+  )
+  .forEach((item) => {
+    item.addEventListener("pointerdown", () => item.classList.add("pressing"));
+    item.addEventListener("pointerup", () => item.classList.remove("pressing"));
+    item.addEventListener("pointerleave", () => item.classList.remove("pressing"));
+    item.addEventListener("blur", () => item.classList.remove("pressing"));
+  });
 
 const gallery = document.querySelector(".figma-glass-orbit");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -91,17 +98,18 @@ if (gallery && !reduceMotion) {
       const diameter = mix(134, maxDiameter, 1 - rightSide * 0.22);
       const maskWidth = diameter * mix(1, 0.54, rightSide);
       const maskHeight = diameter;
+      const tilt = mix(28, 42, rightSide);
       const x = cx - maxDiameter / 2;
       const y = cy - maxDiameter / 2;
 
       item.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0)`;
       item.style.zIndex = String(Math.round(cy));
-      blur.style.width = `${(maskWidth * 0.96).toFixed(2)}px`;
-      blur.style.height = `${(maskHeight * 0.96).toFixed(2)}px`;
-      blur.style.transform = "translate(-50%, -50%)";
+      blur.style.width = `${(maskWidth * 1.04).toFixed(2)}px`;
+      blur.style.height = `${(maskHeight * 1.04).toFixed(2)}px`;
+      blur.style.transform = "translate(-50%, -52%)";
       mask.style.width = `${maskWidth.toFixed(2)}px`;
       mask.style.height = `${maskHeight.toFixed(2)}px`;
-      mask.style.transform = "translate(-50%, -50%) rotate(28deg)";
+      mask.style.transform = `translate(-50%, -50%) rotate(${tilt.toFixed(2)}deg)`;
       img.style.width = `${maxDiameter}px`;
       img.style.height = `${maxDiameter}px`;
     });
