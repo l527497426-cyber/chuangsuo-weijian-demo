@@ -23,6 +23,41 @@ body {
   font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
 }
 
+@keyframes shell-in {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes float-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes sidebar-in {
+  from {
+    opacity: 0;
+    transform: translate3d(-16px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 button,
 textarea,
 a {
@@ -44,6 +79,12 @@ button {
     radial-gradient(circle at 53% 20%, rgba(255, 255, 255, 0.92), transparent 26%),
     linear-gradient(180deg, #dfe8f1 0%, #f8f8f8 100%);
   isolation: isolate;
+  opacity: 0;
+  transform-origin: center;
+}
+
+.is-loaded .app-shell {
+  animation: shell-in 680ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 .ascii-field {
@@ -90,6 +131,11 @@ button {
     0 0 0 0.5px rgba(0, 0, 0, 0.05),
     0 4px 64px rgba(0, 0, 0, 0.05);
   backdrop-filter: blur(22px);
+  opacity: 0;
+}
+
+.is-loaded .sidebar {
+  animation: sidebar-in 620ms 90ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 .sidebar::before {
@@ -268,6 +314,12 @@ button {
   gap: 7px;
   color: rgba(28, 31, 35, 0.72);
   font-size: 12px;
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.user-chip:hover {
+  color: rgba(10, 12, 15, 0.92);
+  transform: translateX(2px);
 }
 
 .avatar {
@@ -288,7 +340,7 @@ button {
   flex: 1;
   min-width: 0;
   overflow: hidden auto;
-  padding: 0 clamp(32px, 6vw, 96px) clamp(28px, 5vh, 54px);
+  padding: 0 clamp(32px, 5.3vw, 76px) clamp(28px, 5vh, 54px);
   scrollbar-width: none;
 }
 
@@ -306,6 +358,11 @@ button {
   transform: translateX(-50%) scale(clamp(0.58, calc((100vw - 240px) / 1660), 0.72));
   transform-origin: top center;
   pointer-events: none;
+  opacity: 0;
+}
+
+.is-loaded .floating-gallery {
+  animation: float-in 780ms 160ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 .gallery-veil {
@@ -340,7 +397,7 @@ button {
   display: block;
   pointer-events: none;
   transform-origin: center;
-  opacity: 0.92;
+  opacity: 0.96;
   mix-blend-mode: screen;
   will-change: width, height, transform;
 }
@@ -412,8 +469,13 @@ button {
   justify-self: center;
   gap: 12px;
   grid-row: 2;
-  margin-bottom: 30px;
+  margin-bottom: 19px;
   white-space: nowrap;
+  opacity: 0;
+}
+
+.is-loaded .hero-title {
+  animation: float-in 640ms 230ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 .hero-title h1 {
@@ -451,6 +513,26 @@ button {
     0 0 0 0.5px rgba(0, 0, 0, 0.05),
     0 28px 58px rgba(26, 38, 58, 0.1);
   backdrop-filter: blur(18px);
+  opacity: 0;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease,
+    background 180ms ease;
+}
+
+.is-loaded .prompt-box {
+  animation: float-in 680ms 300ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.prompt-box:hover,
+.prompt-box:focus-within {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow:
+    0 0 0 0.5px rgba(0, 0, 0, 0.05),
+    0 34px 68px rgba(26, 38, 58, 0.14);
+  transform: translateY(-2px);
 }
 
 .prompt-box textarea {
@@ -496,10 +578,18 @@ button {
   color: #30333a;
   cursor: pointer;
   font-weight: 650;
+  transition: background 150ms ease, color 150ms ease, transform 150ms ease;
 }
 
 .left-actions button {
   padding: 0 4px;
+}
+
+.left-actions button:hover,
+.auto-btn:hover {
+  background: rgba(18, 21, 28, 0.06);
+  color: #101114;
+  transform: translateY(-1px);
 }
 
 .left-actions img,
@@ -519,6 +609,13 @@ button {
   cursor: pointer;
   font-size: 22px;
   line-height: 1;
+  transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.send-btn:hover {
+  background: #050609;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+  transform: translateY(-2px);
 }
 
 .recent {
@@ -526,7 +623,12 @@ button {
   z-index: 4;
   grid-row: 4;
   width: min(100%, 1032px);
-  margin: clamp(68px, 10vh, 92px) auto 0;
+  margin: clamp(72px, 10.5vh, 95px) auto 0;
+  opacity: 0;
+}
+
+.is-loaded .recent {
+  animation: float-in 700ms 380ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 .recent h2 {
@@ -537,21 +639,37 @@ button {
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(4, minmax(160px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(4, minmax(160px, 246px));
+  gap: 16px;
 }
 
 .new-card,
 .project-card {
-  min-height: 210px;
+  min-height: 206px;
   border: 1px solid rgba(255, 255, 255, 0.96);
-  border-radius: 24px;
+  border-radius: 22px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.45), #fff);
   box-shadow:
     0 0 0 0.5px rgba(0, 0, 0, 0.05),
     0 25px 50px -12px rgba(0, 0, 0, 0.07),
     inset 0 1px 2px #fff;
   backdrop-filter: blur(12px);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease,
+    background 180ms ease;
+}
+
+.new-card:hover,
+.project-card:hover {
+  border-color: #fff;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.64), #fff);
+  box-shadow:
+    0 0 0 0.5px rgba(0, 0, 0, 0.05),
+    0 30px 58px -14px rgba(24, 36, 54, 0.14),
+    inset 0 1px 2px #fff;
+  transform: translateY(-4px);
 }
 
 .new-card {
@@ -565,6 +683,10 @@ button {
   cursor: pointer;
   box-shadow: none;
   backdrop-filter: blur(12px);
+}
+
+.new-card:hover {
+  border-color: rgba(0, 0, 0, 0.16);
 }
 
 .new-card span {
@@ -584,6 +706,15 @@ button {
   font-weight: 500;
   line-height: normal;
   white-space: nowrap;
+  transition: color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.new-card:hover span {
+  color: rgba(0, 0, 0, 0.62);
+  box-shadow:
+    inset 0 1px 2px #fff,
+    0 16px 30px rgba(20, 28, 40, 0.08);
+  transform: scale(1.03);
 }
 
 .new-card span img {
@@ -595,7 +726,7 @@ button {
 .project-card {
   position: relative;
   overflow: hidden;
-  padding: 18px;
+  padding: 13px;
 }
 
 .card-head {
@@ -621,14 +752,27 @@ button {
   border-radius: 8px;
   background: transparent;
   color: rgba(28, 31, 35, 0.35);
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease, transform 150ms ease;
+}
+
+.card-head button:hover {
+  background: rgba(18, 21, 28, 0.07);
+  color: rgba(28, 31, 35, 0.7);
+  transform: scale(1.05);
 }
 
 .phone-preview {
   position: absolute;
   left: 50%;
-  bottom: -228px;
-  width: clamp(160px, 14vw, 178px);
+  top: 84px;
+  width: 200px;
   transform: translateX(-50%);
+  transition: transform 220ms ease;
+}
+
+.project-card:hover .phone-preview {
+  transform: translateX(-50%) translateY(-5px);
 }
 
 .phone-preview img {
@@ -638,14 +782,18 @@ button {
 }
 
 .phone-preview .screen {
-  top: 12px;
-  left: 9px;
-  width: calc(100% - 18px);
-  border-radius: 24px;
+  z-index: 1;
+  top: 4px;
+  left: 10px;
+  width: 181px;
+  border-radius: 20px;
+  height: auto;
+  object-fit: cover;
 }
 
 .phone-preview .device {
   position: relative;
+  z-index: 2;
 }
 
 .pressing {
@@ -704,5 +852,26 @@ button {
   .cards {
     grid-template-columns: repeat(4, 216px);
     overflow-x: auto;
+  }
+
+  .phone-preview {
+    width: 184px;
+  }
+
+  .phone-preview .screen {
+    top: 4px;
+    left: 9px;
+    width: 166px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
   }
 }
